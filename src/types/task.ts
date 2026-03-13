@@ -1,0 +1,19 @@
+// Centralized API model types used by services, stores and views.
+
+export interface Task {
+  id: number
+  title: string
+  description?: string
+  completed: boolean
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface LoginRequest {
+  username: string
+  password: string
+}
+
+export interface LoginResponse {
+  token: string
+}
