@@ -6,13 +6,13 @@
 
       <form class="mt-6 space-y-4" @submit.prevent="onSubmit">
         <div>
-          <label class="mb-1 block text-sm font-medium text-slate-700" for="username">Username</label>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="email">Email</label>
           <input
-            id="username"
-            v-model="form.username"
-            type="text"
+            id="email"
+            v-model="form.email"
+            type="email"
             required
-            autocomplete="username"
+            autocomplete="email"
             class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none ring-indigo-200 focus:ring"
           />
         </div>
@@ -54,7 +54,7 @@ const router = useRouter()
 
 // Reactive form state for the login payload.
 const form = reactive({
-  username: '',
+  email: '',
   password: '',
 })
 
