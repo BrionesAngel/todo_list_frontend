@@ -38,6 +38,12 @@
         >
           {{ authStore.isLoading ? 'Signing in...' : 'Sign in' }}
         </button>
+        <p class="text-center text-sm text-slate-500">
+          Don't have an account?
+          <RouterLink to="/register" class="font-medium text-indigo-600 hover:underline">
+            Register
+          </RouterLink>
+        </p>
       </form>
     </div>
   </section>
