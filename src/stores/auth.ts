@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { authService } from '../services/authService'
-import type { LoginRequest } from '../types/task'
+import type { LoginRequest, RegisterRequest } from '../types/task'
 
 const TOKEN_KEY = 'task_app_token'
 
@@ -27,6 +27,17 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function register(credentials: RegisterRequest) {
+    isLoading.value = true
+    try {
+      const response = await authService.register(credentials)
+      token.value = response.token
+      localStorage.setItem(TOKEN_KEY, response.token)
+    } finally {
+      isLoading.value = false
+    } 
+  }
+
   function logout() {
     token.value = null
     localStorage.removeItem(TOKEN_KEY)
@@ -38,6 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     initializeFromStorage,
     login,
+    register,
     logout,
   }
 })

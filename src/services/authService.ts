@@ -1,7 +1,7 @@
 // Auth API calls are isolated in this service to keep views/stores clean.
 
 import { request } from './http'
-import type { LoginRequest, LoginResponse } from '../types/task'
+import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types/task'
 
 export const authService = {
   login(payload: LoginRequest) {
@@ -10,4 +10,11 @@ export const authService = {
       body: JSON.stringify(payload),
     })
   },
+
+  register(payload: RegisterRequest) {
+    return request<RegisterResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
+  }
 }

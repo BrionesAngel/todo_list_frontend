@@ -97,7 +97,11 @@ async function onSubmit() {
 
   try {
     if (!validate()) return
-    await authStore.register(form.username, form.email, form.password)
+    await authStore.register({
+      username: form.username,
+      email: form.email,
+      password: form.password
+    })
     await router.push({ name: 'tasks' })
   } catch (err) {
     error.value = err instanceof HttpError ? err.message : 'Registration failed. Please try again.'

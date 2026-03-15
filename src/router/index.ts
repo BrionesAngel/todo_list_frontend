@@ -46,7 +46,7 @@ router.beforeEach((to) => {
     return { name: 'login' }
   }
 
-  if (to.name === 'login' || to.name === 'register' && authStore.isAuthenticated) {
+  if ((to.name === 'login' || to.name === 'register') && authStore.isAuthenticated) {
     return { name: 'tasks' }
   }
 
