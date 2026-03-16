@@ -6,6 +6,7 @@ import type { Task } from '../types/task'
 export interface CreateTaskPayload {
   title: string
   description?: string
+  completed: boolean
 }
 
 export const taskService = {

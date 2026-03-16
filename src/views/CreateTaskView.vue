@@ -66,6 +66,7 @@ async function onSubmit() {
       {
         title: title.value,
         description: description.value,
+        completed: false
       },
       authStore.token,
     )
