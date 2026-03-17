@@ -6,6 +6,7 @@ const LoginView = () => import('../views/LoginView.vue')
 const RegisterView = () => import('../views/RegisterView.vue')
 const TasksView = () => import('../views/TasksView.vue')
 const CreateTaskView = () => import('../views/CreateTaskView.vue')
+const UpdateTaskView = () => import('../views/EditTaskView.vue')
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -36,6 +37,12 @@ export const router = createRouter({
       component: CreateTaskView,
       meta: { requiresAuth: true },
     },
+    {
+      path: '/tasks/:id/edit',
+      name: 'edit-task',
+      component: UpdateTaskView,
+      meta: { requiresAuth: true },
+    }
   ],
 })
 

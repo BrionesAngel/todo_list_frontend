@@ -44,51 +44,36 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import TaskItem from '../components/TaskItem.vue'
 import { useAuthStore } from '../stores/auth'
+import { useTaskStore } from '../stores/task'
 import { HttpError } from '../services/http'
-import { taskService } from '../services/taskService'
 import type { Task } from '../types/task'
 
 const authStore = useAuthStore()
 const router = useRouter()
 
-const tasks = ref<Task[]>([])
-const isLoading = ref(false)
-const error = ref('')
+const error = ref('') 
+
+const taskStore = useTaskStore()
+const tasks = computed(() => taskStore.tasks) 
+const isLoading = computed(() => taskStore.isLoading)
 
 async function loadTasks() {
   if (!authStore.token) return
-
-  isLoading.value = true
-  error.value = ''
-
-  try {
-    tasks.value = await taskService.getTasks(authStore.token)
-  } catch (err) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to load tasks.'
-  } finally {
-    isLoading.value = false
-  }
+  await taskStore.fetchTasks(authStore.token)
 }
 
 async function toggleTask(task: Task) {
   if (!authStore.token) return
-
   try {
-    const updated = await taskService.updateTask(
-      task.id,
-      {
-        title: task.title,
-        description: task.description,
-        completed: !task.completed,
-      },
-      authStore.token,
-    )
-
-    tasks.value = tasks.value.map((item) => (item.id === task.id ? updated : item))
+    await taskStore.updateTask(task.id, {
+      title: task.title,
+      description: task.description,
+      completed: !task.completed,
+    }, authStore.token)
   } catch (err) {
     error.value = err instanceof HttpError ? err.message : 'Failed to update task.'
   }
@@ -96,14 +81,13 @@ async function toggleTask(task: Task) {
 
 async function deleteTask(taskId: number) {
   if (!authStore.token) return
-
   try {
-    await taskService.deleteTask(taskId, authStore.token)
-    tasks.value = tasks.value.filter((task) => task.id !== taskId)
+    await taskStore.deleteTask(taskId, authStore.token)
   } catch (err) {
     error.value = err instanceof HttpError ? err.message : 'Failed to delete task.'
   }
 }
+
 
 function onLogout() {
   authStore.logout()

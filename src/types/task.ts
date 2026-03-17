@@ -5,8 +5,12 @@ export interface Task {
   title: string
   description?: string
   completed: boolean
-  createdAt?: string
-  updatedAt?: string
+}
+
+export interface TaskRequest {
+  title: string
+  description?: string
+  completed?: boolean
 }
 
 export interface LoginRequest {

@@ -6,7 +6,12 @@ import type { Task } from '../types/task'
 export interface CreateTaskPayload {
   title: string
   description?: string
-  completed: boolean
+  completed?: boolean
+}
+export interface UpdateTaskPayload {
+  title?: string
+  description?: string
+  completed?: boolean
 }
 
 export const taskService = {
@@ -22,11 +27,11 @@ export const taskService = {
     })
   },
 
-  updateTask(id: number, task: Partial<Task>, token: string) {
+  updateTask(id: number, payload: UpdateTaskPayload, token: string) {
     return request<Task>(`/tasks/${id}`, {
       method: 'PUT',
       token,
-      body: JSON.stringify(task),
+      body: JSON.stringify(payload),
     })
   },
 

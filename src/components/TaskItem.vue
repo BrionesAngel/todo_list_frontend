@@ -17,6 +17,14 @@
       <div class="flex items-center gap-2">
         <button
           type="button"
+          class="rounded-lg bg-blue-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-800"
+          @click="$router.push({ name: 'edit-task', params: { id: task.id } })"
+        >
+          Edit
+        </button>
+
+        <button
+          type="button"
           class="rounded-lg px-3 py-1.5 text-sm font-medium text-white"
           :class="task.completed ? 'bg-amber-500 hover:bg-amber-600' : 'bg-emerald-600 hover:bg-emerald-700'"
           @click="$emit('toggle', task)"
@@ -45,6 +53,7 @@ defineProps<{
 
 // Emitted events keep parent in control of side effects.
 defineEmits<{
+  edit: [id: number]
   toggle: [task: Task]
   delete: [id: number]
 }>()
